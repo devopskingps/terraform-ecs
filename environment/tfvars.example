@@ -1,0 +1,426 @@
+#General variables
+#=================
+
+name            = "ppg"
+environment     = ""
+env             = "dev"
+region          = "eu-west-2"
+account         = ""
+
+#TF variables
+#=================
+
+#s3 Bucket:
+#==========
+bucket_name = ""
+
+#Bastion_host variables
+#======================
+ami             = ""
+instance_type   = "t2.micro"
+key_name        = ""
+instance_name   = "Bastion-host"
+
+#VPC variables
+#=============
+
+cidr            = "10.10.0.0/16"
+private_subnets = ["10.10.0.0/20", "10.10.16.0/20", "10.10.32.0/20", "10.10.48.0/20"]
+public_subnets  = ["10.10.64.0/20", "10.10.80.0/20", "10.10.96.0/22"]
+availability_zones = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
+container_port      = 80
+az_count            = 1
+container_cpu       = 1024
+container_memory    = 1024
+
+#SQS variables
+#============
+queuenames      = ["notification.fifo", "push.fifo", "data.fifo"] 
+
+
+#RDS variables
+#=============
+database_name         = ""
+database_user         = ""
+database_port         = "5432"
+skip_final_snapshot   = true
+rds_apps              = ["security", "adaptor", "organisation", "user", "configuration", "contact", "coredb"]
+
+#Redis cluster variables
+#======================
+node_count              = "3"
+node_type               = "cache.t2.small"
+redis_port              = "6379"
+cluster_id              = ""
+engine_version          = "6.2"
+num_cache_nodes         = "1"
+redis_apps              = [ "data", "security" ]
+
+#Alb variables
+#==============
+app_port                = "5000"
+web_port                = "80"
+app_count               = "1"
+health_check_path       = "/"
+health_check_path_bk    = "/swagger/index.html"
+fargate_cpu             = "1024"
+fargate_memory          = "2048"
+certificate_arn         = ""
+certificate_arn_backend = ""
+
+#Frontend task definitions
+#========================
+web = {
+    angular = {
+      account        = ""
+      env            = "dev"
+      app_name       = "angular"
+      app_image      = "angular:latest"
+      app_port       = 80
+      fargate_cpu    = "256"
+      fargate_memory = "512"
+    }
+}
+
+#Backend task definitions
+#========================
+security = {
+    security = {
+      account        = ""
+      env            = "dev"
+      app_name       = "security"
+      app_image      = "security:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+wrapper = {
+    dashboardwrapper = {
+      account        = ""
+      env            = "dev"
+      app_name       = "dashboardwrapper"
+      app_image      = "dashboardwrapper:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    wrapper = {
+      account        = ""
+      env            = "dev"
+      app_name       = "wrapper"
+      app_image      = "wrapper:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    users = {
+      account        = ""
+      env            = "dev"
+      app_name       = "users"
+      app_image      = "users:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    configurations = {
+      account        = ""
+      env            = "dev"
+      app_name       = "configurations"
+      app_image      = "configurations:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    organisations = {
+      account        = ""
+      env            = "dev"
+      app_name       = "organisations"
+      app_image      = "organisations:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    contacts = {
+      account        = ""
+      env            = "dev"
+      app_name       = "contacts"
+      app_image      = "contacts:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+adaptor = {
+    adaptor = {
+      account        = ""
+      env            = "dev"
+      app_name       = "adaptor"
+      app_image      = "adaptor:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+validation = {
+    buyervalidation = {
+      account        = ""
+      env            = "dev"
+      app_name       = "buyervalidation"
+      app_image      = "buyervalidation:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    notification = {
+      account        = ""
+      env            = "dev"
+      app_name       = "notification"
+      app_image      = "notification:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+testmvc = {
+    demo-mvc = {
+      account        = ""
+      env            = "dev"
+      app_name       = "demo-mvc"
+      app_image      = "demo-mvc:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    demo-mvc-saml = {
+      account        = ""
+      env            = "dev"
+      app_name       = "demo-mvc-saml"
+      app_image      = "demo-mvc-saml:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+utility = {
+    ssm-api = {
+      account        = ""
+      env            = "dev"
+      app_name       = "ssm-api"
+      app_image      = "ssm-api:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+jobs = {
+    adaptor-sqs-listener = {
+      account        = ""
+      env            = "dev"
+      app_name       = "adaptor-sqs-listener"
+      app_image      = "adaptor-sqs-listener:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    org-dereg-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "org-dereg-job"
+      app_image      = "org-dereg-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    reporting-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "reporting-job"
+      app_image      = "reporting-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    ppon-job-ms = {
+      account        = ""
+      env            = "dev"
+      app_name       = "ppon-job-ms"
+      app_image      = "ppon-job-ms:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    },
+    delegation-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "delegation-job"
+      app_image      = "delegation-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    },
+    data-migration-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "data-migration-job"
+      app_image      = "data-migration-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+
+
+jobs = {
+    adaptor-sqs-listener = {
+      account        = ""
+      env            = "dev"
+      app_name       = "adaptor-sqs-listener"
+      app_image      = "adaptor-sqs-listener:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    org-dereg-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "org-dereg-job"
+      app_image      = "org-dereg-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    reporting-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "reporting-job"
+      app_image      = "reporting-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+    adhoc-ppon-job = {
+      account        = ""
+      env            = "dev"
+      app_name       = "adhoc-ppon-job"
+      app_image      = "adhoc-ppon-job:latest"
+      app_port       = 5000
+      fargate_cpu    = "512"
+      fargate_memory = "1024"
+    }
+}
+
+
+
+#Ecr repositories
+#================
+
+ecr_repositories = {
+    security = {
+      name                  = "security"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    dashboard-wrapper = {
+      name                  = "dashboard-wrapper"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    adaptor = {
+      name                  = "adaptor"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    wrapper = {
+      name                  = "wrapper"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    adaptor-sqs-listener = {
+      name                  = "adaptor-sqs-listener"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    org-dereg-job = {
+      name                  = "org-dereg-job"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    angular = {
+      name                  = "angular"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    buyervalidation = {
+      name                  = "buyervalidation"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    notification = {
+      name                  = "notification"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    users = {
+      name                  = "users"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    contacts = {
+      name                  = "contacts"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    configurations = {
+      name                  = "configurations"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    organisations = {
+      name                  = "organisations"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    reporting-job = {
+      name                  = "reporting-job"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    ppon-job-ms = {
+      name                  = "ppon-job-ms"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    delegation-job = {
+      name                  = "delegation-job"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    data-migration-job = {
+      name                  = "data-migration-job"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    demo-mvc = {
+      name                  = "demo-mvc"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    demo-mvc-saml = {
+      name                  = "demo-mvc-saml"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    },
+    ssm-api = {
+      name                  = "ssm-api"
+      image_tag_mutability  = "MUTABLE"
+      scan_on_push          = false
+    }
+}
