@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "ppgpreprod-backend-store"
+    bucket         = "bucket_name"
     encrypt        = true
     key            = "terraform.tfstate"
     region         = "eu-west-2"
