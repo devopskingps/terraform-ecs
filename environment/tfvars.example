@@ -1,7 +1,7 @@
 #General variables
 #=================
 
-name            = "ppg"
+name            = "project_name"
 environment     = ""
 env             = "dev"
 region          = "eu-west-2"
@@ -35,7 +35,7 @@ container_memory    = 1024
 
 #SQS variables
 #============
-queuenames      = ["notification.fifo", "push.fifo", "data.fifo"] 
+queuenames      = ["queue1.fifo", "queue2.fifo", "queue3.fifo"] 
 
 
 #RDS variables
@@ -44,7 +44,7 @@ database_name         = ""
 database_user         = ""
 database_port         = "5432"
 skip_final_snapshot   = true
-rds_apps              = ["security", "adaptor", "organisation", "user", "configuration", "contact", "coredb"]
+rds_apps              = ["db1", "db2", "db3", "db4", "db5", "db6", "db7"]
 
 #Redis cluster variables
 #======================
